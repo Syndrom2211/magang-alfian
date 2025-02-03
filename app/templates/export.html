@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Logs - YukMari Project</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../asset/logo1.png" alt="Yukmari Logo">
+            <div class="menu-toggle hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <nav>
+            <a href="/dashboard" class="nav-item" id="dashboard">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </a>
+            <a href="#" class="nav-item active" id="export">
+                <i class="fas fa-file-export"></i>
+                Export logs
+            </a>
+            <a href="/import" class="nav-item" id="import">
+                <i class="fas fa-file-import"></i>
+                Import payload
+            </a>
+            <a href="/logout" class="nav-item logout" id="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </nav>
+    </div>
+    
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search your detection">
+            </div>
+            <div class="notification">
+                <i class="fa-regular fa-bell"></i>
+                <span class="badge">1</span>
+            </div>
+        </div>
+
+        <div class="content-area">
+            
+                <div class="search-container">
+                    <div class="pagination-container">
+                        <label for="rows">Tampilkan:</label>
+                        <select class="rows-per-page" id="rows">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Log Time</th>
+                            <th>Log Message</th>
+                            <th>Source IP</th>
+                            <th>Source Port</th>
+                            <th>Destination IP</th>
+                            <th>Destinaation Port</th>
+                            <th>Severity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>2024-01-20 08:30:15</td>
+                            <td>192.168.1.100</td>
+                            <td>10.0.0.5</td>
+                            <td>TCP</td>
+                            <td>ALLOW</td>
+                            <td>Success</td>
+                            <td>
+                                hallo
+                            </td>
+                        </tr>
+                        <!-- Tambahkan baris data lainnya sesuai kebutuhan -->
+                    </tbody>
+                    
+                </table>
+
+                <ul class="pagination">
+                    <li><a href="#">&laquo;</a></li>
+                    <li><a href="#" class="active">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+                <button class="download">Download File </button>
+            
+        </div>
+    </div>
+
+    <!-- Modal Download -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Export Options</h2>
+                <span class="close-modal">
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+            <div class="modal-body">
+                <button class="export-option">
+                    <i class="fas fa-file-excel"></i>
+                    Export to Excel
+                </button>
+                <button class="export-option">
+                    <i class="fas fa-file-alt"></i>
+                    Export to TXT
+                </button>
+                <button class="export-option">
+                    <i class="fas fa-file-csv"></i>
+                    Export to CSV
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const downloadBtn = document.querySelector('.download');
+        const modal = document.getElementById('downloadModal');
+        const closeModal = document.querySelector('.close-modal');
+    
+        downloadBtn.addEventListener('click', () => {
+            modal.classList.add('show');
+        });
+    
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+    
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+    </script>
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
