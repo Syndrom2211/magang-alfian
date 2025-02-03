@@ -58,7 +58,7 @@ def load_payloads(filepath, desc):
         payloads = []
         for line in tqdm(lines, desc=desc, total=len(lines)):
             payloads.append(r"{}".format(line.strip()))
-            time.sleep(0.001337)
+            # time.sleep(0.001337)
     return payloads
 
 # define variabel payload untuk setiap kerentanan

@@ -1,10 +1,11 @@
-import mysql.connector
 from idsServer import payload_types
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'amanbangetgess'
 app.config['SQLALCHEMY_DATABASE_URI'] ='mysql://root:@localhost/yuk_mari'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -31,7 +32,29 @@ def fetch_attack_data():
 @app.route('/')
 def index():
     data = fetch_attack_data()
+
     return render_template('index.html', data=data)
+
+@app.route('/export')
+def export():
+    return render_template('export.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        if email == 'admin@test.com' and password == 'Test123#':
+            session['user'] = email
+            flash('Berhasil login gesss', 'success')
+
+            return redirect(url_for('index'))
+        
+        else:
+            flash('Salah email atau password gess', 'error')
+    
+    return render_template('login.html')
 
 # routing test serangan via input dengan method POST
 @app.route('/test_input', methods=['POST'])
@@ -61,7 +84,6 @@ def test_input():
     db.session.add(new_log)
     db.session.commit()
 
-    # kembalikan hasil di index
     return redirect(url_for('index'))
 
 # routing untuk hapus log
