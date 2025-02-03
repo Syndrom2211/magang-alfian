@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Threat Detector System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
     <div class="login-container">
         <div class="login-left">
             <div class="lock-icon">
-                <img src="../asset/kunci.png" alt="Security Lock">
+                <img src="{{ url_for('static', filename='img/kunci.png') }}" alt="Security Lock">
             </div>
             <h1>THREAT DETECTOR SYSTEM</h1>
             <div class="copyright">
-                <img src="../asset/wa.png" alt="WhatsApp Icon" class="wa-icon">
+                <img src="{{ url_for('static', filename='img/wa.png') }}" alt="WhatsApp Icon" class="wa-icon">
                 <span>@ 2025 PT. Yuk Mari Projek Indonesia</span>
             </div>
         </div>
@@ -23,10 +22,10 @@
         <div class="login-right">
             <div class="login-form">
                 <div class="logo">
-                    <img src="../asset/logo.png" alt="Yukmari Logo">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Yukmari Logo">
                 </div>
                 
-                <form action="{{ url_for('index') }}" method="POST">
+                <form action="{{ url_for('login') }}" method="POST">
                     <div class="form-group">
                         <input type="email" name="email" placeholder="Enter your email" required>
                     </div>
@@ -34,7 +33,7 @@
                     <div class="form-group">
                         <input type="password" name="password" placeholder="Enter your password" required>
                         <span class="password-toggle">
-                            <img src="../asset/eye.png" alt="Toggle Password">
+                            <img src="{{ url_for('static', filename='img/eye.png') }}" alt="Toggle Password">
                         </span>
                     </div>
                     
@@ -44,10 +43,13 @@
                         <a href="#">Forget password ?</a>
                     </div>
                 </form>
+                {% if error %}
+                <p class="error-message">{{ error }}</p>
+                {% endif %}
             </div>
         </div>
     </div>
 
-    <script src="../static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
