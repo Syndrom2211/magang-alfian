@@ -102,5 +102,23 @@ def delete_log(log_id):
 
     return redirect(url_for('index'))
 
+    # Route untuk reset password
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    background_image_url = url_for('static', filename='img/background.jpg')  # URL gambar (dipindahkan ke sini)
+    if request.method == 'POST':
+        email = request.form['email']
+        try:
+            # Proses reset password (misalnya, kirim email)
+            print(f"Email reset password diminta untuk: {email}")
+            flash("Permintaan reset password telah diproses. Silakan cek email Anda.", "info")  # Pesan sukses
+            return redirect(url_for('login'))  # Redirect ke halaman yang sesuai
+        except Exception as e:
+            print(f"Terjadi kesalahan: {e}")
+            flash("Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi nanti.", "danger")  # Pesan kesalahan
+            return render_template('resetpass.html')  # Render template lagi agar form tidak hilang
+    return render_template('resetpass.html')  # Render template untuk GET request
+
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -11,78 +11,7 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
       rel="stylesheet" />
-    <style>
-      body {
-        font-family: "Poppins", sans-serif; /* Font sesuai gambar */
-        background: linear-gradient(
-            rgba(237, 167, 14, 0.9),
-            rgba(240, 117, 8, 0.9)
-          ),
-          url("include/background.jpg"); /* Gradient background */
-        background-size: cover; /* Background memenuhi layar */
-        color: white;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-      }
-
-      .card {
-        background-color: rgba(
-          50,
-          50,
-          50,
-          0.5
-        ); /* Warna abu-abu gelap transparan */
-        color: white; /* Teks berwarna putih agar kontras */
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-      }
-
-      .card-body {
-        background-color: transparent; /* Hilangkan background putih pada card-body */
-      }
-
-      .card img {
-        width: 400px; /* Ukuran logo */
-        margin-top: -130px;
-        margin-bottom: -25px;
-      }
-
-      .subtitle {
-        margin-bottom: 40px;
-      }
-
-      .input-email {
-        margin-bottom: 15px;
-        box-shadow: 1px 1.5px rgba(0, 0, 0, 0.405);
-      }
-
-      .reset-button {
-        background: linear-gradient(
-          to right,
-          #ffc700,
-          #ff9100
-        ); /* Gradient button */
-        color: white;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 100%; /* Tombol memenuhi lebar card */
-        font-weight: bold; /* Tulisan tombol bold */
-        box-shadow: 1px 3px rgba(0, 0, 0, 0.405);
-      }
-
-      .copyright {
-        font-size: 1.2em;
-        margin-top: 40px;
-        text-align: center;
-      }
-    </style>
+    <link rel="stylesheet" href="../static/css/resetpass.css" />
   </head>
   <body>
     <div class="container">
@@ -91,7 +20,7 @@
           <div class="card">
             <div class="card-body">
               <img
-                src="include/logo.png"
+                src="{{ url_for('static', filename='img/logo.png') }}"
                 alt="Logo YukMarii"
                 class="img-fluid" />
               <p class="subtitle">
