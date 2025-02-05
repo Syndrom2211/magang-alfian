@@ -88,7 +88,11 @@
                                         <th>Source Port</th>
                                         <th>Destination IP</th>
                                         <th>Destination Port</th>
-                                        <th>Severity</th>
+                                        <th class="sortable">
+                                            Severity
+                                            <i class="fas fa-sort"></i>
+                                        </th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -102,6 +106,7 @@
                                         <td data-label="Destination IP">10.0.0.5</td>
                                         <td data-label="Destination Port">443</td>
                                         <td data-label="Severity"><span class="severity-badge high">High</span></td>
+                                        <td><i class="fas fa-trash-alt text-danger"></i></td>
                                     </tr>
                                     <tr>
                                         <td class="checkbox-column"><input type="checkbox" class="form-check-input"></td>
@@ -113,6 +118,7 @@
                                         <td data-label="Destination IP">10.0.0.10</td>
                                         <td data-label="Destination Port">80</td>
                                         <td data-label="Severity"><span class="severity-badge medium">Medium</span></td>
+                                        <td><i class="fas fa-trash-alt text-danger"></i></td>
                                     </tr>
                                     <tr>
                                         <td class="checkbox-column"><input type="checkbox" class="form-check-input"></td>
@@ -124,6 +130,7 @@
                                         <td data-label="Destination IP">10.0.0.10</td>
                                         <td data-label="Destination Port">80</td>
                                         <td data-label="Severity"><span class="severity-badge low">Low</span></td>
+                                        <td><i class="fas fa-trash-alt text-danger"></i></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -145,5 +145,53 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('downloadModal').classList.remove('show');
         });
     });
+
+    // Add sorting functionality
+    const sortableHeader = document.querySelector('.sortable');
+    let isAscending = true;
+
+    if (sortableHeader) {
+        sortableHeader.addEventListener('click', function() {
+            const table = document.getElementById('attackLogsTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            // Toggle sort direction
+            isAscending = !isAscending;
+            
+            // Update icon
+            this.classList.toggle('asc', isAscending);
+
+            // Sort rows
+            rows.sort((a, b) => {
+                const severityA = a.querySelector('[data-label="Severity"] span').textContent;
+                const severityB = b.querySelector('[data-label="Severity"] span').textContent;
+                
+                const severityOrder = {
+                    'High': 3,
+                    'Medium': 2,
+                    'Low': 1
+                };
+
+                const comparison = severityOrder[severityA] - severityOrder[severityB];
+                return isAscending ? comparison : -comparison;
+            });
+
+            // Reorder rows in DOM
+            rows.forEach(row => tbody.appendChild(row));
+        });
+    }
+
+    // Tambahkan event listener untuk tombol delete
+    const deleteButtons = document.querySelectorAll('.fa-trash-alt');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                // Hapus baris tabel
+                const row = this.closest('tr');
+                row.remove();
+            }
+        });
+    });
 });
 

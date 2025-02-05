@@ -814,3 +814,26 @@ nav {
 .id-column {
     width: 60px;
 }
+.sortable {
+    cursor: pointer;
+    position: relative;
+}
+
+.sortable i {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.sortable.asc i {
+    transform: rotate(180deg);
+}
+
+.fa-trash-alt {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.fa-trash-alt:hover {
+    color: #dc3545;
+    transform: scale(1.1);
+}
