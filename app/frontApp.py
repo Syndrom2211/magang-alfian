@@ -1,5 +1,5 @@
-from idsServer import payload_types
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from idsServer import payload_types
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize the SQLAlchemy object
 db = SQLAlchemy(app)
 
-# Define the Log model
+# Model Log
 class Log(db.Model):
     __tablename__ = 'logs'
     id = db.Column(db.Integer, primary_key=True)
@@ -35,28 +35,71 @@ def index():
 
     return render_template('index.html', data=data)
 
+# Route halaman EXPORT
 @app.route('/export')
 def export():
     return render_template('export.html')
 
+# Route halaman Dashboard
+@app.route('/dashboard')
+def dashboard():
+    if 'user' not in session:
+        flash('Silahkan login dulu', 'warning')
+        return redirect(url_for('login'))
+
+    return render_template('dashboard.html')
+
+# Model User
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True) # id auto-increment
+    email = db.Column(db.String(150), unique=True, nullable=False) # email harus unik
+    password_hash = db.Column(db.String(256), nullable=False) # password hash
+
+    # Menyimpan password dalam bentuk hash
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    # Memeriksa apakah password cocok dengan hash di database
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    
+    def __repr__(self):
+        return f"<User {self.email}>"
+    
+with app.app_context():
+        db.create_all()
+        print("Database dan tabel berhasil dibuat!")
+
+        # Tambahkan user baru jika belum ada
+        if not User.query.filter_by(email="admin@example.com").first():
+            new_user = User(email="admin@example.com")
+            new_user.set_password("password123")  # Hash password sebelum menyimpan
+            db.session.add(new_user)
+            db.session.commit()
+            print("User berhasil ditambahkan!")
+            
+# Route halaman LOGIN
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        if email == 'admin@test.com' and password == 'Test123#':
-            session['user'] = email
-            flash('Berhasil login gesss', 'success')
-
-            return redirect(url_for('index'))
+        email = request.form.get('email')
+        password = request.form.get('password')
         
+        # cek apakah email user telah terdaftar di database
+        user = User.query.filter_by(email=email).first()
+
+        if user and user.check_password(password):
+            session['user'] = user.email
+            print(f"User {session['user']} berhasil login")  # Debugging
+            flash('Berhasil login', 'success')
+            return redirect(url_for('dashboard'))
         else:
-            flash('Salah email atau password gess', 'error')
-    
+            flash('Email atau Password salah, try again', 'error')
+        
     return render_template('login.html')
 
-# routing test serangan via input dengan method POST
+# Routing halaman Index - Test Input POST Method
 @app.route('/test_input', methods=['POST'])
 def test_input():
     test_input = request.form['testInput']
@@ -101,7 +144,12 @@ def delete_log(log_id):
 def reset_password():
     background_image_url = url_for('static', filename='img/background.jpg')  # URL gambar (dipindahkan ke sini)
     if request.method == 'POST':
-        email = request.form['email']
+        email = request.form.get('email')
+
+        if not email:
+            flash("Email harus diisi!", "danger")
+            return redirect(url_for('reset_password'))
+
         try:
             # Proses reset password (misalnya, kirim email)
             print(f"Email reset password diminta untuk: {email}")
@@ -115,4 +163,6 @@ def reset_password():
 
 
 if __name__ == "__main__":
+    
+
     app.run(debug=True)
