@@ -181,5 +181,17 @@ document.addEventListener('DOMContentLoaded', function() {
             rows.forEach(row => tbody.appendChild(row));
         });
     }
+
+    // Tambahkan event listener untuk tombol delete
+    const deleteButtons = document.querySelectorAll('.fa-trash-alt');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                // Hapus baris tabel
+                const row = this.closest('tr');
+                row.remove();
+            }
+        });
+    });
 });
 

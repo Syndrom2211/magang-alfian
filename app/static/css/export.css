@@ -827,3 +827,13 @@ nav {
 .sortable.asc i {
     transform: rotate(180deg);
 }
+
+.fa-trash-alt {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.fa-trash-alt:hover {
+    color: #dc3545;
+    transform: scale(1.1);
+}
