@@ -69,6 +69,15 @@ body {
   margin-bottom: 15px;
 }
 
+.input-password:hover {
+  box-shadow: 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.input-password:focus {
+  outline: none;
+  border-bottom: 3px solid orange;
+}
+
 /* Reset button */
 .reset-button {
   background: linear-gradient(to right, #ffc700, #ff9100);
