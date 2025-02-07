@@ -69,8 +69,8 @@
                     <!-- Content goes here -->
                     <div class="content-area">
                         <div class="search-container">
-                            <div class="pagination-container d-flex">
-                                <label for="">Search Date</label>
+                            <div class="pagination-container d-flex date">
+                                <i class="text-white"> Range Date</i>
                                 <i class="fa-solid fa-calendar-days"></i>
                             </div>
                             
@@ -123,9 +123,7 @@
                                         <td data-label="Destination IP">{{ log.ip_dst }}</td>
                                         <td data-label="Destination Port">{{ log.tcp_dport }}</td>
                                         <td data-label="Severity">
-                                            <span class="severity-badge {{ log.severity.critical() }}">
-                                                {{ log.severity }}
-                                            </span>
+                                        <span class="severity-badge critical" >{{ log.severity }}</span>
                                         </td>
                                         <td>
                                             <i class="fas fa-trash-alt text-danger" onclick="deleteLog('{{ log.id }}')"></i>
@@ -171,8 +169,22 @@
                         </div>
                     </div>
                     <div>
-                        <div class="modal" id="viewModal">
-                            <div class="modal-content">
+                        <div class="modal" id="rangeModal">
+                            <div class="modal-content d-flex">
+                                <div class="modal-header">
+                                    <h2>Choose Range</h2>
+                                </div>
+                                <div class="d-flex">
+                                    <div>
+                                        <h6>From</h6>
+                                        <input type="date" class="boxDate">
+                                    </div>
+                                    <div>
+                                        <h6>To</h6>
+                                        <input type="date" class="boxDate">
+                                    </div>
+                                </div>
+                                <button class="apply"> Apply</button>
                             </div>
                         </div>    
                     </div>
@@ -186,6 +198,8 @@
     <script src="../static/js/dashboard.js"></script>
     <script>
         const downloadBtn = document.querySelector('.download');
+        const dateBtn = document.querySelector('.date');
+        const modalR = document.getElementById('rangeModal')
         const modal = document.getElementById('downloadModal');
         const closeModal = document.querySelector('.close-modal');
     
@@ -201,6 +215,22 @@
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('show');
+            }
+        });
+        
+        //date
+
+        dateBtn.addEventListener('click', () => {
+            modalR.classList.add('show');
+        });
+    
+        closeModal.addEventListener('click', () => {
+            modalR.classList.remove('show');
+        });
+        
+        modalR.addEventListener('click', (e) => {
+            if (e.target === modalR) {
+                modalR.classList.remove('show');
             }
         });
     </script>

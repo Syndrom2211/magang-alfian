@@ -40,6 +40,10 @@ def index():
 def export():
     return render_template('export.html')
 
+@app.route('/importt')
+def importt():
+    return render_template('importt.html')
+
 # Route halaman LOGINUSER
 @app.route('/loginuser')
 def loginuser():
