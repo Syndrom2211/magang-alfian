@@ -108,30 +108,26 @@
                                         <td data-label="Severity"><span class="severity-badge high">High</span></td>
                                         <td><i class="fas fa-trash-alt text-danger"></i></td>
                                     </tr>
+                                    {% for log in logs %}
                                     <tr>
                                         <td class="checkbox-column"><input type="checkbox" class="form-check-input"></td>
-                                        <td class="id-column">2</td>
-                                        <td data-label="Log Time">2024-01-20 09:15:22</td>
-                                        <td data-label="Log Message">Login attempt failed</td>
-                                        <td data-label="Source IP">192.168.1.105</td>
-                                        <td data-label="Source Port">9090</td>
-                                        <td data-label="Destination IP">10.0.0.10</td>
-                                        <td data-label="Destination Port">80</td>
-                                        <td data-label="Severity"><span class="severity-badge medium">Medium</span></td>
-                                        <td><i class="fas fa-trash-alt text-danger"></i></td>
+                                        <td class="id-column">{{ log.id }}</td>
+                                        <td data-label="Log Time">{{ log.log_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                        <td data-label="Log Message">{{ log.log_message }}</td>
+                                        <td data-label="Source IP">{{ log.ip_src }}</td>
+                                        <td data-label="Source Port">{{ log.tcp_sport }}</td>
+                                        <td data-label="Destination IP">{{ log.ip_dst }}</td>
+                                        <td data-label="Destination Port">{{ log.tcp_dport }}</td>
+                                        <td data-label="Severity">
+                                            <span class="severity-badge {{ log.severity.lower() }}">
+                                                {{ log.severity }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <i class="fas fa-trash-alt text-danger" onclick="deleteLog('{{ log.id }}')"></i>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td class="checkbox-column"><input type="checkbox" class="form-check-input"></td>
-                                        <td class="id-column">2</td>
-                                        <td data-label="Log Time">2024-01-20 09:15:22</td>
-                                        <td data-label="Log Message">Login attempt failed</td>
-                                        <td data-label="Source IP">192.168.1.105</td>
-                                        <td data-label="Source Port">9090</td>
-                                        <td data-label="Destination IP">10.0.0.10</td>
-                                        <td data-label="Destination Port">80</td>
-                                        <td data-label="Severity"><span class="severity-badge low">Low</span></td>
-                                        <td><i class="fas fa-trash-alt text-danger"></i></td>
-                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
