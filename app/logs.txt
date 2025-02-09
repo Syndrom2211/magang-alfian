@@ -1820,3 +1820,13 @@ INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:16:11] "[33mGET /style.css HTTP/1.1
 INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:16:11] "[36mGET /static/css/account_settings.css HTTP/1.1[0m" 304 -
 INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:16:11] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
 INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:16:11] "[36mGET /static/img/background.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:21:59] "GET /account_settings HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:21:59] "[33mGET /style.css HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:21:59] "GET /static/css/account_settings.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:21:59] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:21:59] "[36mGET /static/img/background.jpg HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:22:24] "GET /account_settings HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:22:24] "[33mGET /style.css HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:22:24] "GET /static/css/account_settings.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:22:24] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [06/Feb/2025 17:22:24] "[36mGET /static/img/background.jpg HTTP/1.1[0m" 304 -
