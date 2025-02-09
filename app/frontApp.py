@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from idsServer import payload_types
+from idsServer import payload_files
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -123,7 +123,7 @@ def test_input():
     severity = 'INFORMATIVE'
 
     # jika ada serangan terdeteksi sesuaikan dengan payload
-    for attack_name, attack_payloads, attack_severity in payload_types:
+    for attack_name, attack_payloads, attack_severity in payload_files:
         if any(payload in test_input for payload in attack_payloads):
             severity = attack_severity
             break
