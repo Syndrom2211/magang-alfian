@@ -1,10 +1,13 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, session, request, jsonify
+from flask_socketio import SocketIO, emit # type: ignore
 from app.utils.decorators import login_required
 from app.models.log import Log
 from app.models.payload import Payload
 from app import db
 import pandas as pd
 import os
+
+socketio = SocketIO(app)
 
 main_bp = Blueprint('main', __name__,
                    static_folder='../static',
@@ -185,3 +188,60 @@ def delete_log(id):
         return jsonify(success=True, message='Log entry deleted successfully')
     except Exception as e:
         return jsonify(success=False, message=str(e)), 500
+
+#Notifikasi ketika terdeteksi ancaman baru
+@main_bp.route('/detect-threat', methods=['POST'])
+def detect_threat():
+    threat_data = request.json
+    # Process threat data...
+    socketio.emit('new_threat', threat_data)
+    return jsonify(success=True)
+
+#Unggah fail payload ke server
+@main_bp.route('/upload-endpoint', methods=['POST'])
+@login_required
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify(success=False, message='No file part')
+    
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify(success=False, message='No selected file')
+
+    # Validate file extension
+    allowed_extensions = {'txt', 'csv', 'xlsx'}
+    file_extension = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
+    
+    if file_extension not in allowed_extensions:
+        return jsonify(success=False, message='Invalid file type. Please upload .txt, .csv, or .xlsx files.')
+
+    nama_payload = request.form.get('nama_payload')  # Get payload name from form
+    severity = request.form.get('severity')  # Get severity from form
+
+    try:
+        if file_extension == 'txt':
+            content = file.read().decode('utf-8')
+            lines = content.splitlines()
+            jumlah_baris = len(lines)
+
+            log_entry = Payload(nama_payload=nama_payload, jumlah_baris=jumlah_baris, severity=severity)
+            db.session.add(log_entry)
+
+        elif file_extension == 'csv':
+            df = pd.read_csv(file)
+            for index, row in df.iterrows():
+                log_entry = Payload(nama_payload=row['nama_payload'], jumlah_baris=row['jumlah_baris'], severity=row['severity'])
+                db.session.add(log_entry)
+        
+        elif file_extension == 'xlsx':
+            df = pd.read_excel(file)
+            for index, row in df.iterrows():
+                log_entry = Payload(nama_payload=row['nama_payload'], jumlah_baris=row['jumlah_baris'], severity=row['severity'])
+                db.session.add(log_entry)
+
+        db.session.commit()
+
+        return jsonify(success=True, payload={'nama_payload': nama_payload, 'jumlah_baris': jumlah_baris, 'severity': severity})
+    except Exception as e:
+        return jsonify(success=False, message=str(e))
