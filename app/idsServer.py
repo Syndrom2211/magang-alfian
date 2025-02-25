@@ -8,13 +8,18 @@ import os
 import signal
 import sys
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
 
 # define db
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="",
-  database="yuk_mari"
+    host=os.getenv("DB_HOST", "localhost"),
+    user=os.getenv("DB_USER", "root"),
+    password=os.getenv("DB_PASSWORD", ""),
+    database=os.getenv("DB_NAME", "yuk_mari")
 )
 
 # aktifkan sql query MySQL
