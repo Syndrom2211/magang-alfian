@@ -1,13 +1,10 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, session, request, jsonify
-from flask_socketio import SocketIO, emit # type: ignore
 from app.utils.decorators import login_required
 from app.models.log import Log
 from app.models.payload import Payload
-from app import db
+from app import db, socketio
 import pandas as pd
 import os
-
-socketio = SocketIO(app)
 
 main_bp = Blueprint('main', __name__,
                    static_folder='../static',
@@ -245,3 +242,12 @@ def upload_file():
         return jsonify(success=True, payload={'nama_payload': nama_payload, 'jumlah_baris': jumlah_baris, 'severity': severity})
     except Exception as e:
         return jsonify(success=False, message=str(e))
+    
+# SocketIO event handlers (if any)
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
